@@ -5,20 +5,44 @@ const buildingHeight = 600; // Height of the building container
 
 let elevatorPosition = 0; // Elevator starts at the bottom
 
-// Move the elevator up or down based on key presses
+function checkFloor(elevatorPosition) {
+  let boolean = true;
+  if ([0, 100, 200, 300, 400, 500].includes(elevatorPosition)) {
+    document.getElementById("output").textContent = `current floor: ${elevatorPosition/100}`;
+    console.log(`Car is at floor ${elevatorPosition / 100}`, elevatorPosition);
+    boolean = true;
+  } else {
+    console.log("car is not at floor");
+    boolean = false;
+  }
+  return boolean;
+}
+
+function checkWeight() {
+
+}
+
+function openDoor(elevatorPosition) {
+  let 
+
+}
+
+// move elevator controls [ UP / DOWN ]
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp') {
-    // Move up, but don't go above the building
+    // move up but not above building
     if (elevatorPosition + elevatorHeight < buildingHeight) {
       elevatorPosition += 10;
     }
   } else if (event.key === 'ArrowDown') {
-    // Move down, but don't go below the building floor
+    // move down but not below building
     if (elevatorPosition > 0) {
       elevatorPosition -= 10;
     }
   }
-  
-  // Update the elevator's position
+
+  checkFloor(elevatorPosition);
+
+  // update elevator's pos
   elevator.style.bottom = `${elevatorPosition}px`;
 });
