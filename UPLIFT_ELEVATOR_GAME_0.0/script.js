@@ -23,7 +23,6 @@ function checkWeight() {
 }
 
 function openDoor(elevatorPosition) {
-  let 
 
 }
 
