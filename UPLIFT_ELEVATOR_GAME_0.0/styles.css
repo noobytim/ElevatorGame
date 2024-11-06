@@ -1,39 +1,60 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #ffffff;
-  }
-  
-  .building {
-    width: 100px;
-    height: 600px;
-    border: 5px solid #06072b;
-    position: relative;
-    overflow: hidden;
-    background-color: #eee;
-  }
-  
-  .elevator {
-    width: 100%;
-    height: 100px;
-    background-color: #74b66e;
-    position: absolute;
-    bottom: 0;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+}
 
-  #output {
-    font-size: 20px;
-    font-weight: italic;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    color: #501572;
-    margin-top: 20px; 
-    text-align: center;
-    position: absolute;
-    top: 0;
-    z-index: 1;
+.building {
+  width: 100px;
+  height: 600px;
+  border: 5px solid #06072b;
+  position: relative;
+  overflow: hidden;
+  background-color: #eee;
+}
+
+.elevator {
+  width: 100%;
+  height: 100px;
+  background-color: #74b66e;
+  position: absolute;
+  bottom: 0;
+}
+
+.floor {
+  width: 100px;
+  height: 2px;
+  background-color: purple;
+  position: absolute;
+}
+
+#output {
+  font-size: 20px;
+  font-weight: italic;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+  margin-top: 20px; 
+  right: 10px;
+  text-align: right;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+#faceDirection {
+  font-size: 20px;
+  font-weight: italic;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+  margin-top: 20px; 
+  left: 10px;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }
 
 
