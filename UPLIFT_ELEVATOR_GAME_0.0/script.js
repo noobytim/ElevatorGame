@@ -3,6 +3,9 @@ const building = document.querySelector('.building');
 const elevatorHeight = 100; // Height of the elevator box
 const buildingHeight = 600; // Height of the building container
 
+const elevatorFaces = ["NORTH", "EAST", "SOUTH", "WEST"];
+let currFaceIndex = 0; //starts with face "A"
+
 let elevatorPosition = 0; // Elevator starts at the bottom
 
 function checkFloor(elevatorPosition) {
@@ -38,7 +41,17 @@ document.addEventListener('keydown', (event) => {
     if (elevatorPosition > 0) {
       elevatorPosition -= 10;
     }
+  } else if (event.key === 'ArrowRight') {
+    currFaceIndex = (currFaceIndex + 1) % elevatorFaces.length;
+    //console.log("Elevator is now facing: " + elevatorFaces[currFaceIndex]);
+    document.getElementById("faceDirection").textContent = `Facing floor: ${elevatorFaces[currFaceIndex]}`;
+
+  } else if (event.key === 'ArrowLeft') {
+    currFaceIndex = (currFaceIndex - 1 + elevatorFaces.length) % elevatorFaces.length;
+    //console.log("Elevator is now facing: " + elevatorFaces[currFaceIndex]);
+    document.getElementById("faceDirection").textContent = `Facing floor: ${elevatorFaces[currFaceIndex]}`;
   }
+
 
   checkFloor(elevatorPosition);
 
