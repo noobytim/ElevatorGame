@@ -64,9 +64,12 @@ function addPassenger(origin, destination, weight) {
 }
 
 // initialize passengers visually
-addPassenger(5, 3, 100);
-addPassenger(1, 3, 258);
-addPassenger(2, 3, 300);
+addPassenger(6, 4, 180);
+addPassenger(6, 2, 95);
+addPassenger(4, 6, 250);
+addPassenger(4, 1, 205);
+addPassenger(3, 5, 50);
+addPassenger(1, 2, 45);
 
 
 function checkFloor(elevatorFloor) {
@@ -98,21 +101,37 @@ function openDoor(elevatorFloor) {
 
     console.log(passenger, "floor:", elevatorFloor);
 
-    if (passenger.origin === elevatorFloor/100 + 1 && !passenger.inElevator) {
+    if (passenger.origin === elevatorFloor/100 + 1 && !passenger.inElevator && !passenger.transported) {
       console.log("passenger matches elevator to pick up!")
       if (checkWeight(passenger.weight)) {
         // allow passenger to enter
         passenger.inElevator = true;
         passenger.el.classList.add('in-elevator'); // move passenger inside elevator
+        passenger.el.style.left = '-300px';
         console.log(`Passenger ${index} entered at floor ${passenger.origin} :)`);
       }
     } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.inElevator) {
       console.log("passenger matches elevator to drop off!")
       // passenger exits at their destination
       passenger.inElevator = false;
+      passenger.transported = true;
       passenger.el.classList.remove('in-elevator'); // move passenger out
-      passenger.el.style.bottom = `${passenger.destination * 100}px`; // position at destination floor
+      passenger.el.style.left = '-400px';
+      passenger.el.style.bottom = `${(elevatorFloor / 100) * 100}px`; // position at destination floor
       console.log(`Passenger ${index} exited at floor ${passenger.destination}`);
+    }
+  });
+}
+
+function updateElevatorPosition(elevatorFloor) {
+  // upate elevator's pos
+  elevator.style.bottom = `${elevatorFloor}px`;
+
+  // update passenger's pos
+  passengers.forEach(passenger => {
+    if (passenger.inElevator) {
+      // set equal to elevator's pos
+      passenger.el.style.bottom = `${elevatorFloor}px`;
     }
   });
 }
@@ -158,6 +177,7 @@ document.addEventListener('keydown', (event) => {
 
 
   checkFloor(elevatorFloor); // outputs current floor text
-  // update elevator's pos
-  elevator.style.bottom = `${elevatorFloor}px`;
+  
+  updateElevatorPosition(elevatorFloor); // updates elevator and passenger pos
+  
 });
