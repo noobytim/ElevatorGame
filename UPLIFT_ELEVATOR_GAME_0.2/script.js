@@ -72,6 +72,8 @@ function addPassenger(origin, destination, weight) {
 // initialize passengers visually
 addPassenger(5, 3, 100);
 addPassenger(1, 3, 258);
+addPassenger(2, 1, 300);
+
 
 
 function checkFloor(elevatorFloor) {
@@ -97,7 +99,7 @@ function checkWeight(newWeight) {
 function openDoor(elevatorFloor) {
   passengers.forEach((passenger, index) => {
 
-    console.log(passenger, "floor:", elevatorFloor);
+    //console.log(passenger, "floor:", elevatorFloor);
 
     if (passenger.origin === elevatorFloor/100 + 1 && !passenger.inElevator) {
       console.log("passenger matches elevator to pick up!")
@@ -154,6 +156,7 @@ document.addEventListener('keydown', (event) => {
     // space to open and close doors
     openDoor(elevatorFloor);
     console.log("doors are opening / closing");
+    console.log("-----------------------------------------------")
 
   } else if (doorsOpen && (event.key === 'a' || event.key === 'd')) { // [ A | D ] for selecting passenger
     moveSelection(event.key === 'a' ? 'left' : 'right');
