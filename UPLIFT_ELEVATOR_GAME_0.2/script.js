@@ -28,20 +28,22 @@ function createPassengerElement(passenger, index) {
   const passengerContainer = document.getElementById('passengers');
 
   // create container
+  
   const passengerWrapper = document.createElement('div');
   passengerWrapper.style.position = 'absolute';
   passengerWrapper.style.bottom = `${(passenger.origin * 100)+120}px`;
-  passengerWrapper.style.right = '10px'; // Align passengers within the building
+  passengerWrapper.style.right = '200px'; // Align passengers within the building
 
   // label for passenger's text
   const labelEl = document.createElement('div');
   labelEl.classList.add('passenger-label');
-  labelEl.textContent = `[ ${passenger.origin} | ${passenger.destination} ]`; // Set the text content for the label
+  //labelEl.textContent = `[ ${passenger.origin} | ${passenger.destination} ]`; // Set the text content for the label
+  
 
   // create the passenger box
   const passengerEl = document.createElement('div');
   passengerEl.classList.add('passenger');
-  passengerEl.textContent = `${passenger.weight}`;
+  passengerEl.textContent = `[ ${passenger.origin} | ${passenger.weight} | ${passenger.destination} ]`;
 
   // Append the label and the passenger box to the wrapper
   passengerWrapper.appendChild(labelEl);
