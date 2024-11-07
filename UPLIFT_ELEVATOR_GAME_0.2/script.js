@@ -8,6 +8,7 @@ let elevatorFloor = 0; // elevator starts at the bottom floor
 
 let doorsOpen = false;
 let alignedFloor = false;
+let overweight = false;
 
 const elevatorFaces = ["N", "E", "S", "W"];
 let currFaceIndex = 0; //starts with face "A"
@@ -23,20 +24,13 @@ class Passenger {
   }
 }
 
-/*
-const passengers = [
-  new Passenger(6, 3, 60),  // Starting on floor 0, going to floor 3
-  new Passenger(2, 5, 70),  // Starting on floor 2, going to floor 5
-];
-*/
-
 function createPassengerElement(passenger, index) {
   const passengerContainer = document.getElementById('passengers');
 
   // create container
   const passengerWrapper = document.createElement('div');
   passengerWrapper.style.position = 'absolute';
-  passengerWrapper.style.bottom = `${(passenger.origin * 100)+200}px`;
+  passengerWrapper.style.bottom = `${(passenger.origin * 100)+120}px`;
   passengerWrapper.style.right = '10px'; // Align passengers within the building
 
   // label for passenger's text
@@ -72,8 +66,7 @@ function addPassenger(origin, destination, weight) {
 // initialize passengers visually
 addPassenger(5, 3, 100);
 addPassenger(1, 3, 258);
-addPassenger(2, 1, 300);
-
+addPassenger(2, 3, 300);
 
 
 function checkFloor(elevatorFloor) {
@@ -93,13 +86,17 @@ function checkWeight(newWeight) {
   let currentWeight = passengers
     .filter(passenger => passenger.inElevator)
     .reduce((total, passenger) => total + passenger.weight, 0);
-  return currentWeight + newWeight <= MAX_WEIGHT;
+  let weightTot = currentWeight + newWeight;
+  console.log(weightTot);
+  overweight = (weightTot < MAX_WEIGHT) ? false : true;
+  console.log("exceeded weight? ", overweight); 
+  return weightTot <= MAX_WEIGHT;
 }
 
 function openDoor(elevatorFloor) {
   passengers.forEach((passenger, index) => {
 
-    //console.log(passenger, "floor:", elevatorFloor);
+    console.log(passenger, "floor:", elevatorFloor);
 
     if (passenger.origin === elevatorFloor/100 + 1 && !passenger.inElevator) {
       console.log("passenger matches elevator to pick up!")
@@ -107,7 +104,7 @@ function openDoor(elevatorFloor) {
         // allow passenger to enter
         passenger.inElevator = true;
         passenger.el.classList.add('in-elevator'); // move passenger inside elevator
-        console.log(`Passenger ${index} entered at floor ${passenger.origin}`);
+        console.log(`Passenger ${index} entered at floor ${passenger.origin} :)`);
       }
     } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.inElevator) {
       console.log("passenger matches elevator to drop off!")
@@ -146,17 +143,11 @@ document.addEventListener('keydown', (event) => {
     //console.log("Elevator is now facing: " + elevatorFaces[currFaceIndex]);
     document.getElementById("faceDirection").textContent = `facing side: ${elevatorFaces[currFaceIndex]}`;
 
-  /*
-  } else if (event.key == 'Space' && elevatorPosition == (passenger.origin * 100) + 200 && !passenger.inElevator) {
-    openDoor();
-  }
-  */
-
   } else if (event.key === ' ' && alignedFloor == true) {
     // space to open and close doors
     openDoor(elevatorFloor);
     console.log("doors are opening / closing");
-    console.log("-----------------------------------------------")
+    console.log("-----------------------------------------------");
 
   } else if (doorsOpen && (event.key === 'a' || event.key === 'd')) { // [ A | D ] for selecting passenger
     moveSelection(event.key === 'a' ? 'left' : 'right');
