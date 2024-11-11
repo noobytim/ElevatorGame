@@ -16,9 +16,11 @@ let currFaceIndex = 0; //starts with face "A"
 
 //// INITIALIZING PASSENGERS AND THEIR BEHAVIORS //////////////////////
 class Passenger {
-  constructor(origin, destination, weight) {
+  constructor(originFace, origin, destination, destinationFace, weight) {
+    this.originFace = originFace;
     this.origin = origin;                // e.g. {orientation: 'A', floor: 1}
     this.destination = destination;      // e.g. {orientation: 'B', floor: 2}
+    this.destinationFace = destinationFace
     this.weight = weight;
     this.inElevator = false;             // track if passenger in in elevator
   }
@@ -43,7 +45,7 @@ function createPassengerElement(passenger, index) {
   // create the passenger box
   const passengerEl = document.createElement('div');
   passengerEl.classList.add('passenger');
-  passengerEl.textContent = `[ ${passenger.origin} | ${passenger.weight} | ${passenger.destination} ]`;
+  passengerEl.textContent = `[ ${passenger.originFace} | ${passenger.origin} | ${passenger.weight} | ${passenger.destination} | ${passenger.destinationFace}]`;
 
   // Append the label and the passenger box to the wrapper
   passengerWrapper.appendChild(labelEl);
@@ -58,20 +60,17 @@ function createPassengerElement(passenger, index) {
 
 // adds a new passenger
 const passengers = [];
-function addPassenger(origin, destination, weight) {
-  const newPassenger = new Passenger(origin, destination, weight);
+function addPassenger(originFace, origin, destination, destinationFace, weight) {
+  const newPassenger = new Passenger(originFace, origin, destination, destinationFace, weight);
   passengers.push(newPassenger);
 
   createPassengerElement(newPassenger, passengers.length - 1);
 }
 
 // initialize passengers visually
-addPassenger(6, 4, 180);
-addPassenger(6, 2, 95);
-addPassenger(4, 6, 250);
-addPassenger(4, 1, 205);
-addPassenger(3, 5, 50);
-addPassenger(1, 2, 45);
+addPassenger(elevatorFaces[0], 6, 4, elevatorFaces[1], 180);
+addPassenger(elevatorFaces[0], 4, 1, elevatorFaces[3], 205);
+addPassenger(elevatorFaces[2], 3, 5, elevatorFaces[1], 50);
 
 
 function checkFloor(elevatorFloor) {
@@ -99,11 +98,13 @@ function checkWeight(newWeight) {
 }
 
 function openDoor(elevatorFloor) {
+  let elevatorFace = elevatorFaces[currFaceIndex];
+  console.log(elevatorFace);
   passengers.forEach((passenger, index) => {
 
     console.log(passenger, "floor:", elevatorFloor);
 
-    if (passenger.origin === elevatorFloor/100 + 1 && !passenger.inElevator && !passenger.transported) {
+    if (passenger.origin === elevatorFloor/100 + 1 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported) {
       console.log("passenger matches elevator to pick up!")
       if (checkWeight(passenger.weight)) {
         // allow passenger to enter
@@ -112,7 +113,7 @@ function openDoor(elevatorFloor) {
         passenger.el.style.left = '-300px';
         console.log(`Passenger ${index} entered at floor ${passenger.origin} :)`);
       }
-    } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.inElevator) {
+    } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.destinationFace === elevatorFace && passenger.inElevator) {
       console.log("passenger matches elevator to drop off!")
       // passenger exits at their destination
       passenger.inElevator = false;
@@ -143,13 +144,13 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowUp') {
     // move up but not above building
     if (elevatorFloor + elevatorHeight < buildingHeight) {
-      elevatorFloor += 10;
+      elevatorFloor += 100;
     }
 
   } else if (event.key === 'ArrowDown') {
     // move down but not below building
     if (elevatorFloor > 0) {
-      elevatorFloor -= 10;
+      elevatorFloor -= 100;
     }
 
   } else if (event.key === 'ArrowRight') {
