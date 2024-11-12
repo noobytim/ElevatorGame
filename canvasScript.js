@@ -43,6 +43,7 @@ function createPassengerElement(passenger) {
           passenger.inElevator = false;
           passenger.transported = false;
           passenger.delivered = false;
+        ctx.fillText
 }
 
 // adds a new passenger
@@ -54,8 +55,8 @@ function addPassenger(originFace, origin, destination, destinationFace, weight) 
 }
 
 // initialize passengers properties
-addPassenger(elevatorFaces[0], 1, 4, elevatorFaces[0], 180);
-addPassenger(elevatorFaces[1], 4, 1, elevatorFaces[3], 205);
+addPassenger(elevatorFaces[0], 1, 6, elevatorFaces[0], 50);
+addPassenger(elevatorFaces[1], 4, 1, elevatorFaces[3], 50);
 addPassenger(elevatorFaces[2], 3, 5, elevatorFaces[1], 50);
 
 function checkDelivery(passenger) {
@@ -66,30 +67,37 @@ function checkDelivery(passenger) {
 
 // draws the passengers
 function drawPassengers() {
+
+  let passengerNUM = 0;
+
   passengers.forEach((passenger) => {
       if (passenger.inElevator === true && !passenger.delivered) {
           // move with elevator
-          passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10;
+          passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10 + passengerNUM;
           passenger.el.y = 100 + elevatorFloor;
           ctx.fillStyle = 'maroon';
+          passengerNUM += 30;
+
       } else if (passenger.transported === true) {
           // move to left of elevator
           console.log("trasnported to blue");
           passenger.transported = false;
           passenger.delivered = true;
           passenger.el.x = 100;
-          passenger.el.y = 110 + elevatorFloor;
-          ctx.fillStyle = 'blue';
+          passenger.el.y = 100 + elevatorFloor;
+          ctx.fillStyle = '#E8AC41';
+
       } else if (passenger.delivered) {
-          ctx.fillStyle = 'blue';
+          ctx.fillStyle = '#E8AC41';
+
       } else if (passenger.inElevator === false && !passenger.delivered) {
           // Remain outside elevator
           passenger.el.x = 450;
-          passenger.el.y = (passenger.origin * 100) + 10;
-          ctx.fillStyle = 'orange';
+          passenger.el.y = (passenger.origin * 100);
+          ctx.fillStyle = '#4B61D1';
       }
 
-      // Draw the passenger rectangle
+      // draw the passenger rectangle
       ctx.fillRect(passenger.el.x, passenger.el.y, passenger.el.width, passenger.el.height);
       
 
@@ -161,7 +169,7 @@ function checkFloor(elevatorFloor) {
     return alignedFloor;
 }
 
-let MAX_WEIGHT = 400;
+let MAX_WEIGHT = 100;
 // check weight capacity of the elevator
 function checkWeight(newWeight) {
     let currentWeight = passengers
@@ -169,6 +177,7 @@ function checkWeight(newWeight) {
       .reduce((total, passenger) => total + passenger.weight, 0);
     let weightTot = currentWeight + newWeight;
     overweight = (weightTot > MAX_WEIGHT);
+    console.log("overweight?:", overweight);
     return !overweight;
 }
 
@@ -187,7 +196,7 @@ function openDoor(elevatorFloor) {
                 console.log(`Passenger entered at floor ${passenger.origin}`);
             }
         } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.destinationFace === elevatorFace && passenger.inElevator) {
-            console.log("passenger", passenger.destination, "matches elevator", elevatorFloor, "to drop off!")
+            console.log("passenger with desired floor", passenger.destination, "matches elevator", elevatorFloor, "to drop off!")
             passenger.inElevator = false;
             passenger.transported = true;
             console.log(`Passenger exited at floor ${passenger.destination}`);
