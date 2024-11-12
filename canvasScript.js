@@ -107,23 +107,40 @@ function drawBuilding() {
     ctx.lineWidth = 3;
     ctx.strokeRect(x, y, buildingWidth, buildingHeight);
 }
-
-// draws floor lines and numbers on building
-function drawFloors() {
-    ctx.fillStyle = 'rgb(121, 74, 35)';
-    for (let i = 0; i < floorTot; i++) {
-        x = (canvas.width - buildingWidth) / 2;
-        y = 100 + i * 100;
-        ctx.fillRect(x, y, buildingWidth, 2);
-    }
-  }
  
 function drawElevator() {
-    ctx.fillStyle = '#f5cf72';
+    ctx.fillStyle = 'rgba(245, 207, 114, 0.5)';
     x = ((canvas.width - buildingWidth) / 2);
     y = 100 + elevatorFloor;
     ctx.fillRect(x,y, elevatorWidth, elevatorHeight);
 }
+
+// draws floor lines and numbers on building
+function drawFloors() {
+  //ctx.font = "80px Georgia, 'Times New Roman', Times, serif";
+  ctx.font = '50px italic';
+  ctx.fillStyle = 'rgb(188, 110, 110)';
+  ctx.textAlign = 'center';
+    for (let i = 0; i < floorTot; i++) {
+        x = (canvas.width - buildingWidth) / 2;
+        y = 100 + i * 100;
+        ctx.fillRect(x, y, buildingWidth, 2);
+        let floorX = x + 50;
+        let floorY = y + 30;
+
+      // save the current state
+      ctx.save();
+    
+      // Move to the text position, rotate 180 degrees, and draw the number
+      ctx.translate(floorX, floorY);
+      ctx.scale(-1,1); // flip horiz
+      ctx.rotate(Math.PI); // 180 degrees in radians
+      ctx.fillText(i + 1, 0, 0); // Draw at the rotated origin
+      
+      // restore the canvas state
+      ctx.restore();
+    }
+  }
 
 function newCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -162,7 +179,7 @@ function openDoor(elevatorFloor) {
     passengers.forEach((passenger) => {
         //console.log(passenger, "floor:", elevatorFloor);
 
-        if (passenger.origin === elevatorFloor/100 + 1 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported) {
+        if (passenger.origin === elevatorFloor/100 + 1 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported && !passenger.delivered) {
             console.log("passenger matches elevator to pick up!")
             if (checkWeight(passenger.weight)) {
                 // allow passenger to enter
