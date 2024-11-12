@@ -58,14 +58,16 @@ addPassenger(elevatorFaces[0], 1, 4, elevatorFaces[0], 180);
 addPassenger(elevatorFaces[1], 4, 1, elevatorFaces[3], 205);
 addPassenger(elevatorFaces[2], 3, 5, elevatorFaces[1], 50);
 
-function checkPassengerLocation() {
-
+function checkDelivery(passenger) {
+  passenger.inElevator = false;
+  passenger.transported = false;
+  passenger.delivered = true;
 }
 
 // draws the passengers
 function drawPassengers() {
   passengers.forEach((passenger) => {
-      if (passenger.inElevator === true) {
+      if (passenger.inElevator === true && !passenger.delivered) {
           // move with elevator
           passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10;
           passenger.el.y = 100 + elevatorFloor;
@@ -78,7 +80,9 @@ function drawPassengers() {
           passenger.el.x = 100;
           passenger.el.y = 110 + elevatorFloor;
           ctx.fillStyle = 'blue';
-      } else if (passenger.inElevator === false && !  passenger.delivered) {
+      } else if (passenger.delivered) {
+          ctx.fillStyle = 'blue';
+      } else if (passenger.inElevator === false && !passenger.delivered) {
           // Remain outside elevator
           passenger.el.x = 450;
           passenger.el.y = (passenger.origin * 100) + 10;
@@ -163,15 +167,12 @@ function openDoor(elevatorFloor) {
             if (checkWeight(passenger.weight)) {
                 // allow passenger to enter
                 passenger.inElevator = true;
-                //passenger.el.x = elevatorXPosition; // Set this to elevator's X position on canvas
-                //passenger.el.y = elevatorYPosition; // Set this to elevator's Y position on canvas
                 console.log(`Passenger entered at floor ${passenger.origin}`);
             }
         } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.destinationFace === elevatorFace && passenger.inElevator) {
             console.log("passenger", passenger.destination, "matches elevator", elevatorFloor, "to drop off!")
             passenger.inElevator = false;
             passenger.transported = true;
-            //passenger.el.classList.remove('in-elevator'); // move passenger out
             console.log(`Passenger exited at floor ${passenger.destination}`);
         }
     });
