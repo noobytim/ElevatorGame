@@ -29,18 +29,28 @@ class Passenger {
       this.destinationFace = destinationFace
       this.weight = weight;
       this.inElevator = false;             // track if passenger in in elevator
+      this.created = false;
     }
 }
 
 // creates singular passengers
 function createPassengerElement(passenger) {
-    passenger.el = {
-      x: 450, // Set fixed x-position for passenger on the right side of the building
-      y: (passenger.origin * 100) + 60, // Set y-position based on the origin floor
-      width: 20,
-      height: 40,
-    };
-    passenger.inElevator = false;
+    if (passenger.inElevator = false) {
+        passenger.el = {
+            x: 450, // Set fixed x-position for passenger on the right side of the building
+            y: (passenger.origin * 100) + 10, // Set y-position based on the origin floor
+            width: 20,
+            height: 40,
+          };
+          passenger.inElevator = true;
+    } else {
+        passenger.el = {
+            x: ((canvas.width - buildingWidth) / 2) + 5,
+            y: (passenger.origin * 100) + 10,
+            width: 20,
+            height: 40,
+        };
+    }
 }
 
 // adds a new passenger
@@ -91,6 +101,7 @@ function drawPassengers() {
     passengers.forEach((passenger) => {
       if (passenger.inElevator) {
         ctx.fillStyle = 'maroon';
+
         ctx.fillRect(passenger.el.x, passenger.el.y, passenger.el.width, passenger.el.height);
         // Draw the passenger label inside or next to the elevator rectangle
         ctx.fillStyle = 'black';
@@ -98,6 +109,7 @@ function drawPassengers() {
         ctx.fillText(`[ ${passenger.originFace} ${passenger.origin} | ${passenger.weight} | ${passenger.destinationFace} ${passenger.destination} ]`,
                     passenger.origin + passenger.el.width + 5, 40 + passenger.el.height / 2);
       } else {
+        passenger.inElevator = false;
         // draws passengers outside elevator
         ctx.fillStyle = 'violet';
         ctx.fillRect(passenger.el.x, passenger.el.y, passenger.el.width, passenger.el.height);
@@ -169,10 +181,10 @@ function openDoor(elevatorFloor) {
 function updateElevatorPosition(elevatorFloor) {
     // upate elevator's pos
     //elevator.style.bottom = `${elevatorFloor}px`;
-  
     // update passenger's pos
     passengers.forEach(passenger => {
       if (passenger.inElevator) {
+        passenger.pos = elevatorFloor;
         // set equal to elevator's pos
         //console.log(passenger.el.style.bottom);
         console.log(elevatorFloor);
