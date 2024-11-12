@@ -1,6 +1,7 @@
 //// CONSTANTS /////////////////////////////////////////////////////////
 const canvas = document.getElementById('elevatorCanvas');
 const ctx = canvas.getContext('2d');
+ctx.setTransform(1,0,0,-1,0,canvas.height);
 
 // Constants for drawing on canvas
 const buildingWidth = 100;
@@ -8,7 +9,7 @@ const elevatorHeight = 100; // Height of elevator in pixels on the canvas
 const buildingHeight = 600; // Height of building in pixels on the canvas
 const elevatorWidth = 96;
 
-let elevatorFloor = buildingHeight - elevatorHeight; // Current elevator floor, starting at 0 (bottom)
+let elevatorFloor = 0; // Current elevator floor, starting at 0 (bottom)
 let floorTot = 6;
 
 let doorsOpen = false;
@@ -44,14 +45,14 @@ function createPassengerElement(passenger) {
 
 // adds a new passenger
 const passengers = [];
-function addPassenger(origin, destination, weight) {
-  const newPassenger = new Passenger(origin, destination, weight);
+function addPassenger(originFace, origin, destination, destinationFace, weight) {
+  const newPassenger = new Passenger(originFace, origin, destination, destinationFace, weight);
   passengers.push(newPassenger);
   createPassengerElement(newPassenger);
 }
 
 // initialize passengers properties
-addPassenger(elevatorFaces[0], 1, 4, elevatorFaces[1], 180);
+addPassenger(elevatorFaces[0], 1, 4, elevatorFaces[0], 180);
 addPassenger(elevatorFaces[0], 4, 1, elevatorFaces[3], 205);
 addPassenger(elevatorFaces[2], 3, 5, elevatorFaces[1], 50);
 
@@ -144,9 +145,9 @@ function openDoor(elevatorFloor) {
     let elevatorFace = elevatorFaces[currFaceIndex];
     console.log(elevatorFace);
     passengers.forEach((passenger) => {
-        console.log(passenger, "floor:", elevatorFloor);
+        //console.log(passenger, "floor:", elevatorFloor);
 
-        if (passenger.origin === elevatorFloor/100 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported) {
+        if (passenger.origin === elevatorFloor/100 + 1 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported) {
             console.log("passenger matches elevator to pick up!")
             if (checkWeight(passenger.weight)) {
                 // allow passenger to enter
@@ -155,7 +156,7 @@ function openDoor(elevatorFloor) {
                 //passenger.el.y = elevatorYPosition; // Set this to elevator's Y position on canvas
                 console.log(`Passenger entered at floor ${passenger.origin}`);
             }
-        } else if (passenger.destination === elevatorFloor/100 && passenger.destinationFace === elevatorFace && passenger.inElevator) {
+        } else if (passenger.destination === elevatorFloor/100 + 1 && passenger.destinationFace === elevatorFace && passenger.inElevator) {
             console.log("passenger", passenger.destination, "matches elevator", elevatorFloor, "to drop off!")
             passenger.inElevator = false;
             passenger.transported = true;
@@ -189,15 +190,16 @@ document.addEventListener('keydown', (event) => {
 
     if (event.key === 'ArrowUp') {
         // move up but not above building
-        if (elevatorFloor > 0) {
-          elevatorFloor -= 100;
-        }
+        if (elevatorFloor + elevatorHeight < buildingHeight) {
+            elevatorFloor += 100;
+          }
+        
     
       } else if (event.key === 'ArrowDown') {
         // move down but not below building
-        if (elevatorFloor + elevatorHeight < buildingHeight) {
-          elevatorFloor += 100;
-        }
+        if (elevatorFloor > 0) {
+            elevatorFloor -= 100;
+          }
     
       } else if (event.key === 'ArrowRight') {
         // orient to right
