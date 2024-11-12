@@ -30,20 +30,19 @@ class Passenger {
       this.weight = weight;
       this.inElevator = false;             // track if passenger in in elevator
       this.created = false;
+      this.delivered = false;
     }
 }
 
 // creaes initial singular passengers and sets them up with correct values
 function createPassengerElement(passenger) {
         passenger.el = {
-            //xout: 450, // Set fixed x-position for passenger on the right side of the building
-            //xin: ((canvas.width - buildingWidth) / 2) + 5,
-            //y: (passenger.origin * 100) + 10, // Set y-position based on the origin floor
             width: 20,
             height: 40,
           };
           passenger.inElevator = false;
           passenger.transported = false;
+          passenger.delivered = false;
 }
 
 // adds a new passenger
@@ -67,17 +66,19 @@ function checkPassengerLocation() {
 function drawPassengers() {
   passengers.forEach((passenger) => {
       if (passenger.inElevator === true) {
-          // Move with elevator
+          // move with elevator
           passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10;
-          passenger.el.y = 100 + elevatorFloor + (elevatorHeight - passenger.el.height) / 2;
+          passenger.el.y = 100 + elevatorFloor;
           ctx.fillStyle = 'maroon';
       } else if (passenger.transported === true) {
           // move to left of elevator
           console.log("trasnported to blue");
-          passenger.el.x = -300;
-          passenger.el.y = 100 + elevatorFloor + (elevatorHeight - passenger.el.height) / 2;
+          passenger.transported = false;
+          passenger.delivered = true;
+          passenger.el.x = 100;
+          passenger.el.y = 110 + elevatorFloor;
           ctx.fillStyle = 'blue';
-      } else if (passenger.inElevator === false) {
+      } else if (passenger.inElevator === false && !  passenger.delivered) {
           // Remain outside elevator
           passenger.el.x = 450;
           passenger.el.y = (passenger.origin * 100) + 10;
