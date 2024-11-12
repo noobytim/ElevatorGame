@@ -59,24 +59,45 @@ addPassenger(elevatorFaces[0], 1, 6, elevatorFaces[0], 50);
 addPassenger(elevatorFaces[1], 4, 1, elevatorFaces[3], 50);
 addPassenger(elevatorFaces[2], 3, 5, elevatorFaces[1], 50);
 
-function checkDelivery(passenger) {
-  passenger.inElevator = false;
-  passenger.transported = false;
-  passenger.delivered = true;
+
+function passengerLabel(passenger) {
+  // Save the current canvas state
+  ctx.save();
+
+  // Move to the text position
+  ctx.translate(passenger.el.x, passenger.el.y);
+
+  // Apply transformations
+  ctx.scale(-1, 1); // Flip horizontally
+  ctx.rotate(Math.PI); // Rotate 180 degrees (flip vertically)
+
+  // Adjust the position for the flipped canvas
+  const adjustedX = 10;  // Since we're flipping, we need to adjust x
+  const adjustedY = -45;  // You can adjust y if needed
+
+  ctx.font = '10px italic';
+  ctx.fillStyle = 'darkpurple';
+  ctx.textAlign = 'center';
+  
+  // Draw the text with the adjusted position
+  ctx.fillText(`${passenger.originFace}${passenger.origin} | ${passenger.weight} | ${passenger.destinationFace}${passenger.destination}`, adjustedX, adjustedY);
+  
+  // Restore the canvas state
+  ctx.restore();
 }
 
 // draws the passengers
 function drawPassengers() {
 
-  let passengerNUM = 0;
+  let passengerDisplacement = 0;
 
   passengers.forEach((passenger) => {
       if (passenger.inElevator === true && !passenger.delivered) {
           // move with elevator
-          passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10 + passengerNUM;
+          passenger.el.x = ((canvas.width - buildingWidth) / 2) + 10 + passengerDisplacement;
           passenger.el.y = 100 + elevatorFloor;
           ctx.fillStyle = 'maroon';
-          passengerNUM += 30;
+          passengerDisplacement += 30;
 
       } else if (passenger.transported === true) {
           // move to left of elevator
@@ -99,8 +120,7 @@ function drawPassengers() {
 
       // draw the passenger rectangle
       ctx.fillRect(passenger.el.x, passenger.el.y, passenger.el.width, passenger.el.height);
-      
-
+      passengerLabel(passenger);
   });
 }
 
@@ -184,10 +204,7 @@ function checkWeight(newWeight) {
 // handles passenger entering or exiting the elevator
 function openDoor(elevatorFloor) {
     let elevatorFace = elevatorFaces[currFaceIndex];
-    console.log(elevatorFace);
     passengers.forEach((passenger) => {
-        //console.log(passenger, "floor:", elevatorFloor);
-
         if (passenger.origin === elevatorFloor/100 + 1 && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported && !passenger.delivered) {
             console.log("passenger matches elevator to pick up!")
             if (checkWeight(passenger.weight)) {
@@ -204,20 +221,6 @@ function openDoor(elevatorFloor) {
     });
 }
 
-function updateElevatorPosition(elevatorFloor) {
-    // upate elevator's pos
-    //elevator.style.bottom = `${elevatorFloor}px`;
-    // update passenger's pos
-    passengers.forEach(passenger => {
-      if (passenger.inElevator) {
-        passenger.pos = elevatorFloor;
-        // set equal to elevator's pos
-        //console.log(passenger.el.style.bottom);
-        console.log(elevatorFloor);
-      }
-    });
-}
-
 
 // move elevator controls [ UP / DOWN ]
 document.addEventListener('keydown', (event) => {
@@ -231,7 +234,6 @@ document.addEventListener('keydown', (event) => {
         if (elevatorFloor + elevatorHeight < buildingHeight) {
             elevatorFloor += 100;
           }
-        
     
       } else if (event.key === 'ArrowDown') {
         // move down but not below building
@@ -266,7 +268,7 @@ document.addEventListener('keydown', (event) => {
     
     
       checkFloor(elevatorFloor); // outputs current floor text
-      updateElevatorPosition(elevatorFloor); // updates elevator and passenger pos
+      //updateElevatorPosition(elevatorFloor); // updates elevator and passenger pos
     
     newCanvas(); // Update the canvas with the new positions
 });
