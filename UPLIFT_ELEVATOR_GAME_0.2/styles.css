@@ -4,13 +4,20 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #ffffff;
+  background-color: #f0f0f0;
+}
+
+#elevatorCanvas {
+  border: 1px solid #a68eda;
+  height: 800px;
+  width: 600px;
 }
 
 .building {
   width: 100px;
   height: 600px;
-  border: 5px solid #06072b;
+  border: 5px solid #6c70dc;
+  align-items: center;
   position: relative;
   overflow: hidden;
   background-color: #eee;
@@ -36,11 +43,11 @@ body {
   font-size: 50px;
   font-weight: italic;
   left: 35px;
-  color: rgb(152, 34, 34);
+  color: rgb(188, 110, 110);
   
 }
 
-#output {
+#floorNum {
   font-size: 20px;
   font-weight: italic;
   font-family:Georgia, 'Times New Roman', Times, serif;
@@ -93,7 +100,7 @@ align-items: center;
 justify-content: center;
 font-weight: bold;
 border-radius: 3px;
-white-space:nowrap;
+white-space: nowrap;
 text-overflow: ellipsis;
 }
 
