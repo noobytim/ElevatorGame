@@ -3,11 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elevator Simulation</title>
+  <title>Elevator Game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
+
+
+  <!-- Title screen with game title and instructions -->
+  <div id="title-screen" class="title-screen">
+    <h1>UPL <span class="highlight"> I </span> FT : The Elevator Game</h1>
+    <p>Press Space to Start</p>
+  </div>
+  
+    <!-- Menu that will appear when space is pressed -->
+    <div id="menu" style="display: none;">
+      <h2>MENU</h2>
+      <button onclick="startGame()">New Game</button>
+      <button onclick="startGame()">1</button>
+    </div>
+
+
+  <!-- Game container -->
+  <div class="container" id="game-area" style="display: none;">
     <div class="building">
       <div class="elevator" id="elevator"></div>
     </div>
@@ -19,17 +36,34 @@
     <canvas id="elevatorCanvas" width="600" height="800"></canvas>
   </div>
 
-  <h2>Music Player</h2>
-  
-  <!-- Audio player -->
-  <audio controls>
-    <source src="Summer_Samba_(So_Nice).mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <script src="js/menu.js"></script>
+  <script src="js/canvasScript.js"></script>
 
-<!-- YouTube Embed with Hidden Video -->
+  <audio id="titleMusic" src="assets\elevator_bell_2.mp3" preload="auto"></audio>
+  <audio id="gameMusic1" src="assets\Summer_Samba_(So_Nice).mp3" preload="auto"></audio>
+  <audio id="gameMusic2" src="assets\NGE_FlyMeToTheMoon_BossaNova.mp3" preload="auto"></audio>
 
+  <script>
+    // this gets the audio file :)
+    const titleMusic = document.getElementById('titleMusic');
 
-  <script src="canvasScript.js"></script>
+    // waits for spacebar press
+    function pressSpace(event) {
+      if (event.code === 'Space') {
+        // plays ding !
+        titleMusic.play();
+
+        // hide the title screen and show the menu
+        document.getElementById('title-screen').style.display = 'none';
+        document.getElementById('menu').style.display = 'block';
+
+        // prevent spacebar from triggering ahain
+        window.removeEventListener('keydown', pressSpace);
+      }
+    }
+
+  window.addEventListener('keydown', pressSpace);
+  </script>
+
 </body>
 </html>

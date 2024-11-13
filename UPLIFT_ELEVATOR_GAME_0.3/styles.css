@@ -13,6 +13,18 @@ body {
   width: 600px;
 }
 
+#title-screen {
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* makes I in UPLIFT pink :D */
+.highlight {
+  color: #514fe4;
+  font-weight: bold;
+  transform: scaleX(2.5);
+  display: inline-block; 
+}
+
 #floorNum {
   font-size: 20px;
   font-weight: italic;
