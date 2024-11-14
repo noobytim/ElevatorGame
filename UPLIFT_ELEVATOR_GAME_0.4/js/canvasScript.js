@@ -23,6 +23,8 @@ let MAX_WEIGHT = 100;
 const elevatorFaces = ["N", "E", "S", "W"];
 let currFaceIndex = 0; // starts with face "N"
 
+let timer = 5;
+
 //// INITIALIZING PASSENGERS AND THEIR BEHAVIORS //////////////////////
 class Passenger {
     constructor(originFace, origin, destination, destinationFace, weight) {
@@ -233,6 +235,26 @@ function openDoor(elevatorFloor) {
     });
 }
 
+function startTimer() {
+  document.getElementById("timerDisplay").textContent = `Time Left: ${timer}`;
+  timerRange = setInterval(() => {
+    timer--;
+    timerDisplay.textContent = `Time Left: ${timer}`;
+    if (timer == 0) {
+      clearInterval(timerRange);
+      endGame(false);
+    }
+  }, 1000);
+}
+
+function checkWinCondition() {
+  for (i = 0; i < passengers.length; i++) {
+    if (!passengers[i].delivered) {
+      return
+    }
+  }
+  endGame(true);
+}
 
 // move elevator controls [ UP / DOWN ]
 document.addEventListener('keydown', (event) => {
