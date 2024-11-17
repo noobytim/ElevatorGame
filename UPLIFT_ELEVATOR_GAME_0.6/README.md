@@ -1,18 +1,11 @@
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Please download Visual Studio Code.
+Then open this folder in Visual Studio Code.
+On lefthand side bar, click on EXTENSIONS, and install Live Server.
+After installation, navigate back to explorer on sidebar, and right-click the index.html file and click "Open with Live Server" to open up the game in a browser.
 
-## Folder Structure
+**Sometimes the level refuses to load the level stage. 
+  Refresh the page and reclick the level button from the menu screen if so.
 
-The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
