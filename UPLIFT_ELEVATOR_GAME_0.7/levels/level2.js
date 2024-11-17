@@ -1,9 +1,9 @@
 // level2.js
-let levelConfigurations = {
+window.levelConfigurations = {
     buildingHeight: 500,
     floorTot: 5,
     MAX_WEIGHT: 100,
-    //timer: 30,
+    timer: 25,
     passengers: [
         { originFace: 'E', origin: 5, destination: 1, destinationFace: 'E', weight: 45},
         { originFace: 'W', origin: 4, destination: 2, destinationFace: 'E', weight: 25},
