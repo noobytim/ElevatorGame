@@ -21,7 +21,7 @@ let overweight = false;
 const MAX_WEIGHT = levelConfigurations.MAX_WEIGHT;
 document.getElementById("weightLimit").textContent = `weight limit: ${MAX_WEIGHT}`;
 
-let timer = 30;
+let timer = levelConfigurations.timer;
 
 let gameended = false;
 
