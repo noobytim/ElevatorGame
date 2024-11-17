@@ -27,86 +27,37 @@ function startGame(levelNum) {
 
     document.getElementById("menu").style.display = "none";
     document.getElementById("game-area").style.display = "block";
-
     console.log("I am at startgame function right now");
-
     gameAreaLoaded = true;
 
     loadLevel(levelNum);
     
 }
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => resolve(`${src} loaded successfully`);
+        script.onerror = () => reject(new Error(`${src} failed to load`));
+        document.body.appendChild(script);
+    });
+}
 
 function loadLevel(levelNum) {
+    const levelScript = `levels/level${levelNum - 1}.js`;
+    const canvasScript = "js/canvasScript.js";
 
-    if (levelNum === 1) {
-        const script2 = document.createElement("script");
-        script2.src = "levels/level0.js";
-        script2.onload = function() {
-        console.log("level0.js loaded successfully");
-        };
-         // append the script to the body to load it
-        document.body.appendChild(script2);
-
-        const script = document.createElement("script");
-        script.src = "js/canvasScript.js";
-        script.onload = function() {
-        console.log("canvasScript.js loaded successfully");
-        };
-         // append the script to the body to load it
-        document.body.appendChild(script);
-        
-    } else if (levelNum === 2) {
-        const script2 = document.createElement("script");
-        script2.src = "levels/level1.js";
-        script2.onload = function() {
-        console.log("level1.js loaded successfully");
-        };
-         // append the script to the body to load it
-        document.body.appendChild(script2);
-
-        const script = document.createElement("script");
-        script.src = "js/canvasScript.js";
-        script.onload = function() {
-        console.log("canvasScript.js loaded successfully");
-        };
-         // append the script to the body to load it
-        document.body.appendChild(script);
-    
-    } else if (levelNum === 3) {
-        const script2 = document.createElement("script");
-        script2.src = "levels/level2.js";
-        script2.onload = function() {
-        console.log("level2.js loaded successfully");
-        };
-        // append the script to the body to load it
-        document.body.appendChild(script2);
-
-        const script = document.createElement("script");
-        script.src = "js/canvasScript.js";
-        script.onload = function() {
-        console.log("canvasScript.js loaded successfully");
-        };
-        // append the script to the body to load it
-        document.body.appendChild(script);
-    
-    } else if (levelNum === 4) {
-        const script2 = document.createElement("script");
-        script2.src = "levels/level3.js";
-        script2.onload = function() {
-        console.log("level3.js loaded successfully");
-        };
-        // append the script to the body to load it
-        document.body.appendChild(script2);
-
-        const script = document.createElement("script");
-        script.src = "js/canvasScript.js";
-        script.onload = function() {
-        console.log("canvasScript.js loaded successfully");
-        };
-        // append the script to the body to load it
-        document.body.appendChild(script);
-    }
-    
+    loadScript(levelScript)
+        .then((message) => {
+            console.log(message);
+            return loadScript(canvasScript); // load canvasScript.js after level script so can refresh page now
+        })
+        .then((message) => {
+            console.log(message);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function retryButton() {
