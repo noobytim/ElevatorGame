@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elevator Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <audio id="titleMusic" src="assets\elevator_bell_2.mp3" preload="auto"></audio>
+  <audio id="DOOR" src="assets\elevator_closing_opening.mp3" preload="auto"></audio>
+  <audio id="gameMusic1" src="assets\Summer_Samba_(So_Nice).mp3" preload="auto"></audio>
+  <audio id="gameMusic2" src="assets\NGE_FlyMeToTheMoon_BossaNova.mp3" preload="auto"></audio>
+  <audio id="gameMusic3" src="assets\Today's Diary.mp3" preload="auto"></audio>
+
+  <script>
+    // this gets the audio file :)
+    const titleSound = document.getElementById('titleMusic');
+  </script>
+
+  <!-- Title screen with game title and instructions -->
+  <div id="title-screen" class="title-screen">
+    <h1>UPL <span class="highlight"> I </span> FT : The Elevator Game</h1>
+    <p>Press Space to Start</p>
+  </div>
+  
+  <!-- Menu that will appear when space is pressed -->
+  <div id="menu" style="display: none;">
+    <h2>M E N U</h2>
+    <button onclick="startGame(1)">1</button>
+    <button onclick="startGame(2)">2</button>
+    <button onclick="startGame(3)">3</button>
+    <button onclick="startGame(4)">4</button>
+  </div>
+
+  <!-- Game container -->
+  <div class="container" id="game-area" style="display: none;">
+    <div class="building">
+      <div class="elevator" id="elevator"></div>
+    </div>
+
+    <!-- Labels that will be positioned relative to the canvas -->
+    <div id="counters">
+    <div id="floorNum">current floor: 1</div>
+    <div id="faceDirection">facing side: N</div>
+    <div id="timerDisplay" >time left: 60</div>
+    <div id="weightLimit">weight limit: ?</div>
+    </div>
+    
+    <canvas id="elevatorCanvas" width="600" height="800"></canvas>
+  </div>
+
+  <!-- RETRY screen that will appear when level ends -->
+  <div id="retry" style="display: none;">
+    <h2>R E T R Y</h2>
+    <button onclick="retry(true)">YES</button>
+    <button onclick="retry(false)">NO</button>
+  </div>
+  <script src="js/menu.js"></script>
+
+</body>
+</html>

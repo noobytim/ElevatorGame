@@ -1,0 +1,89 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+#elevatorCanvas {
+  border: 1px solid #a68eda;
+  height: 800px;
+  width: 600px;
+}
+
+#title-screen {
+  font-family: 'Arial Black', sans-serif;
+}
+
+#menu {
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* makes I in UPLIFT blue :D */
+.highlight {
+  color: #514fe4;
+  font-weight: bold;
+  transform: scaleX(2.5);
+  display: inline-block; 
+}
+
+
+#counters {
+  width: 600px; /* Restrict to 600px */
+  position: relative;
+  margin: 0 auto; /* Center container horizontally */
+  height: 40px; /* Adjust as needed for the height of the bar */
+}
+
+
+#floorNum {
+  font-size: 20px;
+  font-weight: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  left: 30%; /* Align to left-center */
+  transform: translateX(-25%); /* Center it horizontally around the 25% position */
+  z-index: 1;
+}
+
+#faceDirection {
+  font-size: 20px;
+  font-weight: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  left: 0; /* Align to the left corner */
+  z-index: 1;
+}
+
+#weightLimit {
+  font-size: 20px;
+  font-weight: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  right: 25%; /* Align to right-center */
+  transform: translateX(5%); /* Center it horizontally around the 75% position */
+  z-index: 1;
+}
+
+#timerDisplay {
+  font-size: 20px;
+  font-weight: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  right: 0; /* Align to the right corner */
+  z-index: 1;
+}
