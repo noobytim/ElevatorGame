@@ -25,7 +25,8 @@ ctx.setTransform(1,0,0,-1,0,canvas.height);
   const elevatorFaces = ["N", "E", "S", "W"];
   let currFaceIndex = 0; // current face starts with face "N"
 
-
+  const winSound = document.getElementById('win');
+  const loseSound = document.getElementById('lose');
 
 //// INITIALIZING PASSENGERS AND THEIR BEHAVIORS ///////////////////////////////////////////////////
 class Passenger {
@@ -209,7 +210,7 @@ function drawElevator() {
   // multiply the current transformation matrix by the rotation matrix
   ctx.transform(Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle), 0, 0); // rotation matrix
 
-  // Draw the elevator car at the new position, which is at the rotated origin
+  // draw the elevator car at the new position, which is at the rotated origin
   ctx.fillRect(-elevatorWidth / 2, -elevatorHeight / 2, elevatorWidth, elevatorHeight); // draw at the rotated position
 
     // adds a line at the entrance of the elevator 
@@ -367,9 +368,11 @@ function drawEnd(text, color) {
 function endGame(won) {
 clearInterval(timerRange);
 if (won) {
-  drawEnd("LEVEL COMPLETE RETRY?", "#E8AC41");
+  drawEnd("LEVEL COMPLETE", "#E8AC41");
+  winSound.play();
 } else {
-  drawEnd("LEVEL FAILED RETRY?", "#501572");
+  drawEnd("LEVEL FAILED", "#501572");
+  loseSound.play();
 }
 gameended = true;
 retryButton();

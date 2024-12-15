@@ -5,6 +5,6 @@ window.levelConfigurations = {
     timer: 10,
     passengers: [
         { originFace: 'N', origin: 1, destination: 4, destinationFace: 'S', weight: 50 },
-        { originFace: 'N', origin: 1, destination: 4, destinationFace: 'S', weight: 50 }
+        { originFace: 'S', origin: 1, destination: 4, destinationFace: 'N', weight: 50 }
     ]
 };
