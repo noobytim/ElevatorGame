@@ -49,7 +49,7 @@ function loadScript(src) {
 }
 
 function loadLevel(levelNum) {
-    const levelScript = `levels/level${levelNum - 1}.js`;
+    const levelScript = `levels/level${levelNum}.js`;
     const canvasScript = "js/canvas.js";
 
     loadScript(levelScript)
@@ -64,9 +64,9 @@ function loadLevel(levelNum) {
 
 function retryButton() {
 
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("game-area").style.display = "none";
-    document.getElementById("retry").style.display = "block";
+    // document.getElementById("menu").style.display = "none";
+    // document.getElementById("game-area").style.display = "none";
+    // document.getElementById("retry").style.display = "block";
 
 }
 

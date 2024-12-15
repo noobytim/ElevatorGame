@@ -1,13 +1,13 @@
-// level2.js
+// level3.js
 window.levelConfigurations = {
-    buildingHeight: 600,
-    floorTot: 6,
-    MAX_WEIGHT: 300,
-    timer: 20,
+    floorTot: 5,
+    MAX_WEIGHT: 100,
+    timer: 25,
     passengers: [
-        { originFace: 'N', origin: 6, destination: 4, destinationFace: 'S', weight: 180 },
-        { originFace: 'W', origin: 2, destination: 2, destinationFace: 'N', weight: 250 },
-        { originFace: 'W', origin: 3, destination: 5, destinationFace: 'E', weight: 50 },
-        { originFace: 'N', origin: 1, destination: 5, destinationFace: 'S', weight: 280 }
+        { originFace: 'E', origin: 5, destination: 1, destinationFace: 'E', weight: 45},
+        { originFace: 'W', origin: 4, destination: 2, destinationFace: 'E', weight: 25},
+        { originFace: 'N', origin: 2, destination: 1, destinationFace: 'N', weight: 55},
+        { originFace: 'S', origin: 3, destination: 5, destinationFace: 'E', weight: 75},
+        { originFace: 'N', origin: 1, destination: 4, destinationFace: 'S', weight: 90}
     ]
 };

@@ -3,7 +3,6 @@ const canvas = document.getElementById('elevatorCanvas');
 const ctx = canvas.getContext('2d');
 ctx.setTransform(1,0,0,-1,0,canvas.height);
 
-function initializeVariables(){
   const buildingWidth = 100;
   const buildingHeight = 100;
   const elevatorWidth = 100;
@@ -26,10 +25,6 @@ function initializeVariables(){
   const elevatorFaces = ["N", "E", "S", "W"];
   let currFaceIndex = 0; // current face starts with face "N"
 
-  // initialize passengers properties
-  passengers.length = 0; // clear all passengers
-  initializePassengers();
-}
 
 
 //// INITIALIZING PASSENGERS AND THEIR BEHAVIORS ///////////////////////////////////////////////////
@@ -294,15 +289,6 @@ function newCanvas() {
     checkWinCondition();
 }
 
-function resetCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
-  drawBuilding();
-  drawNESW();
-  drawElevator();
-  drawPassengers();
-  drawFloors();
-}
-
 // check if the elevator is aligned to the floor
 function checkFloor(elevatorFloor) {
     if ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(elevatorFloor)) {
@@ -386,7 +372,7 @@ if (won) {
   drawEnd("LEVEL FAILED RETRY?", "#501572");
 }
 gameended = true;
-//   retryButton();
+retryButton();
 }
 
 startTimer();
@@ -439,9 +425,4 @@ document.addEventListener('keydown', (event) => {
       }
 });
 
-function initializeGame() {
-  initializeGameVariables(); // Reset all game variables
-  resetCanvas();             // Redraw the canvas in its initial state
-}
-
-initializeGame()();
+newCanvas();
