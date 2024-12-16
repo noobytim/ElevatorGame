@@ -15,7 +15,6 @@ document.addEventListener("keydown", function(event) {
         // can't go back to title screen now
         gameStarted = true;
 
-        //document.removeEventListener("keydown", handleSpacebar);
     }
 });
 
@@ -48,6 +47,7 @@ function loadScript(src) {
     });
 }
 
+// loads the desired level number and then the canvas accordingly
 function loadLevel(levelNum) {
     const levelScript = `levels/level${levelNum}.js`;
     const canvasScript = "js/canvas.js";

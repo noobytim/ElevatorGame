@@ -66,9 +66,6 @@ function initializePassengers() {
   });
 }
 
-// initialize passengers properties
-initializePassengers();
-
 function drawText(ctx, textLines, x, y, lineHeight) {
   textLines.forEach((line, index) => {
     ctx.fillText(line, x, y + index * lineHeight);
@@ -78,6 +75,7 @@ function drawText(ctx, textLines, x, y, lineHeight) {
 // draws the weight, origin and destination on each individual passenger
 function passengerLabel(passenger) {
 
+  //// incremental transformation
   ctx.save();
 
   // move to the text position
@@ -204,16 +202,20 @@ function drawElevator() {
 
   ctx.save();
 
-  // multiply the current transformation matrix by the translation matrix
-  ctx.setTransform(1, 0, 0, 1, x + elevatorWidth / 2, y + elevatorHeight / 2); // move to the center
+  /// LINQ ///
 
-  // multiply the current transformation matrix by the rotation matrix
-  ctx.transform(Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle), 0, 0); // rotation matrix
+  // (1) sets TRANSFORMATION MATRIX to the TRANSLATION MATRIX
+  // which moves the origin to the center of elevator car
+  ctx.setTransform(1, 0, 0, 1, x + elevatorWidth / 2, y + elevatorHeight / 2);
 
-  // draw the elevator car at the new position, which is at the rotated origin
-  ctx.fillRect(-elevatorWidth / 2, -elevatorHeight / 2, elevatorWidth, elevatorHeight); // draw at the rotated position
+  // (2) multiply the current TRANSFORMATION MATRIX by the ROTATION MATRIX
+  // which rotates the drawing about the translated origin
+  ctx.transform(Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle), 0, 0); // ROTATION MATRIX
 
-    // adds a line at the entrance of the elevator 
+  // (3) draw the elevator car at the new position, which is at the rotated origin
+  ctx.fillRect(-elevatorWidth / 2, -elevatorHeight / 2, elevatorWidth, elevatorHeight);
+
+    // adds a line at the entrance of the elevator to visually act as the door
     ctx.strokeStyle = '	#65000B';
     ctx.lineWidth = 10;
     ctx.beginPath();
@@ -236,7 +238,7 @@ function drawFloors() {
         // only draw floor number if the current floor matches the elevator floor
         if (i + 1 === elevatorFloor) {
 
-          // save the current state
+          //// incremental transformation
           ctx.save();
 
           // move to the text position, rotate 180 degrees, and draw the number
@@ -250,11 +252,12 @@ function drawFloors() {
   }
 }
 
+// draws the NESW cardinal directions around the elevator car
 function drawNESW() {
   const x = (canvas.width - buildingWidth) / 2 + elevatorWidth / 2;
   const y = 446;
   const labels = ["N", "E", "S", "W"];
-  const angleStep = Math.PI / 2; // 90 degrees in radians
+  const angleROT = Math.PI / 2; // 90 degrees
 
   ctx.font = '20px Arial Black';
   ctx.fillStyle = '#65000B';
@@ -262,6 +265,8 @@ function drawNESW() {
   ctx.textBaseline = 'middle';
 
   for (let i = 0; i < labels.length; i++) {
+
+    //// incremental transformation
     ctx.save();
 
     ctx.translate(x, y);
@@ -269,7 +274,7 @@ function drawNESW() {
     ctx.rotate(Math.PI);
 
     // rotate to correct faces
-    const angle = i * angleStep; // 0 for N, 90 degrees for E, etc.
+    const angle = i * angleROT; // 0 for N, 90 degrees for E, ...
     ctx.rotate(angle);
     // move text
     ctx.translate(0, -elevatorHeight / 2 - 20);
@@ -280,6 +285,7 @@ function drawNESW() {
   }
 }
 
+// redraws entire canvas :)
 function newCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBuilding();
@@ -301,14 +307,13 @@ function checkFloor(elevatorFloor) {
     return alignedFloor;
 }
 
-// check weight capacity of the elevator
+// check weight capacity of the elevator against passengers
 function checkWeight(newWeight) {
     let currentWeight = passengers
       .filter(passenger => passenger.inElevator)
       .reduce((total, passenger) => total + passenger.weight, 0);
     let weightTot = currentWeight + newWeight;
     overweight = (weightTot > MAX_WEIGHT);
-    console.log("overweight?:", overweight);
     return !overweight;
 }
 
@@ -317,22 +322,18 @@ function openDoor(elevatorFloor) {
     let elevatorFace = elevatorFaces[currFaceIndex];
     passengers.forEach((passenger) => {
         if (passenger.origin === elevatorFloor && passenger.originFace === elevatorFace && !passenger.inElevator && !passenger.transported && !passenger.delivered) {
-            console.log("passenger matches elevator to pick up!")
             if (checkWeight(passenger.weight)) {
                 // allow passenger to enter
                 passenger.inElevator = true;
-                console.log(`Passenger entered at floor ${passenger.origin}`);
             }
         } else if (passenger.destination === elevatorFloor && passenger.destinationFace === elevatorFace && passenger.inElevator) {
-            console.log("passenger with desired floor", passenger.destination, "matches elevator", elevatorFloor, "to drop off!")
             passenger.inElevator = false;
             passenger.transported = true;
-            console.log(`Passenger exited at floor ${passenger.destination}`);
         }
     });
 }
 
-// the timer
+// the timer which incrementally decreases
 function startTimer() {
   document.getElementById("timerDisplay").textContent = `time left: ${timer}`;
   timerRange = setInterval(() => {
@@ -345,6 +346,7 @@ function startTimer() {
   }, 1000);
 }
 
+// checks if all passengers are delivered to correct destination before timer runs out
 function checkWinCondition() {
   for (let i = 0; i < passengers.length; i++) {
     if (!passengers[i].delivered && timer > 0) {
@@ -354,7 +356,10 @@ function checkWinCondition() {
   endGame(true);
 }
 
+// aesthetics for endgame text
 function drawEnd(text, color) {
+
+  //// incremental transformation
   ctx.save(); 
   ctx.translate(canvas.width / 2, canvas.height - 50);
   ctx.scale(1, -1);
@@ -365,23 +370,23 @@ function drawEnd(text, color) {
   ctx.restore();
 }
 
+// tells player if they completed or failed a given level
 function endGame(won) {
-clearInterval(timerRange);
-if (won) {
-  drawEnd("LEVEL COMPLETE", "#E8AC41");
-  winSound.play();
-} else {
-  drawEnd("LEVEL FAILED", "#501572");
-  loseSound.play();
-}
-gameended = true;
-retryButton();
+  clearInterval(timerRange);
+  if (won) {
+    drawEnd("LEVEL COMPLETE", "#E8AC41");
+    winSound.play();
+  } else {
+    drawEnd("LEVEL FAILED", "#501572");
+    loseSound.play();
+  }
+  gameended = true;
+  retryButton();
 }
 
-startTimer();
-
-// move elevator controls [ UP / DOWN ]
+// move elevator controls [ UP / DOWN / LEFT / RIGHT / OPENDOOR ]
 document.addEventListener('keydown', (event) => {
+
     // prevent default action for arrow keys to avoid page scrolling
     if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', ' '].includes(event.key)) {
         event.preventDefault();
@@ -391,14 +396,12 @@ document.addEventListener('keydown', (event) => {
         // move up but not above building
         if (elevatorFloor < floorTot) {
             elevatorFloor += 1;
-            console.log("moved up!");
           }
     
       } else if (event.key === 'ArrowDown') {
         // move down but not below building
         if (elevatorFloor > 1) {
             elevatorFloor -= 1;
-            console.log("moved down!");
           }
     
       } else if (event.key === 'ArrowRight') {
@@ -414,10 +417,9 @@ document.addEventListener('keydown', (event) => {
       } else if (event.key === ' ' && alignedFloor == true) {
         // space to open and close doors
         openDoor(elevatorFloor);
-        console.log("doors are opening / closing");
-        console.log("-----------------------------------------------");
     
-      } else if (doorsOpen && event.key === 'Enter') { // enter to pick up/drop off
+      } else if (doorsOpen && event.key === 'Enter') { 
+        // enter to pick up/drop off
         handlePassengerPickupOrDropoff();
       }
     
@@ -428,4 +430,9 @@ document.addEventListener('keydown', (event) => {
       }
 });
 
+// initialize passengers properties
+initializePassengers();
+
 newCanvas();
+
+startTimer();

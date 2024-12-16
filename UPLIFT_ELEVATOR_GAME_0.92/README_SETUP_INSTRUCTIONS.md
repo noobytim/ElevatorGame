@@ -30,5 +30,3 @@ In our game, we accomplished many of our goals through our implementations. One 
 8. Once the end screen appears, the player can refresh the page to return to the menu screen. 
    From there, the player can either retry or continue and play another level. 
 9. For more indepth instructions, refer to the Elevator Game Manual.
-
-
