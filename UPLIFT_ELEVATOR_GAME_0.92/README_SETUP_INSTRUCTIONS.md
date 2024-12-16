@@ -1,22 +1,11 @@
-Code/Documentation/Mini Report: In lieu of a formal final report, you will submit a brief summary of what you accomplished, along with code and directions on how to use it. You can think of this as an extended README. You will be graded on the quality of your code and documentation (how easy is it for someone who doesn't know your project to run your code?).
+###### README
+Timothy Jeon, Ren-Zhi Zheng, and Dante Ottaviani.
 
+Our project evolved significantly throughout the course of this semester. Originally, we went through different iterations on how we wanted our game to look visually and how the players would interact with the game. An example would be how we initally tried to make our game in 3D using ggslac but then pivoted to 2D using Javascript, CSS, and HTML as it was a better direction to take our game. Another example would be our elevator building initially being designed to be viewed on the side but then changed it to a top-down view to implement rotations and better readability on passenger location. In the end, we implemented a design we think best suits the needs for both Computer Graphics and Intro to Game Studies as well as our personal goal to create a simple, yet complex game based on the concept of elevators. 
 
+Despite having a working prototype that our group is somewhat satisfied with, we weren't able to implement every goal we had in mind. Some examples include a retry button, infinite mode, passengers showing up randomly instead of presetting them, and shaders to make the game more vibrant. 
 
-
-
-
-In our project, we accomplished many of our goals through our implementations. 
-We implemented rotations using matrix multiplication from class to rotate the elevator box in four directions. 
-We also implemented 
-
-
-
-Implementing expansive game logic to make our game work.
-Implementing something we learned in class to rotate the elevator box (matrix multiplication).
-Learned much more on how to use javascript, css, and html.
-
-
-
+In our game, we accomplished many of our goals through our implementations. One accomplishment was pushing ourselves to learn more about Javascript and how it works with CSS and HTML. Another accomplishment was developing better teamwork skills and code organization on a large project that dealt with many conditionals which are skills useful for the future. The main accomplishment though was figuring out how to visually respresent the elevator while incorporating rotations using matrices, a concept learned from class, in a way that's easily readable to the players. 
 
 ###### Getting Started
 
@@ -38,8 +27,8 @@ Learned much more on how to use javascript, css, and html.
 6. You can pickup multiple passengers if the total weight is less than or equal to the weight limit of the elevator. 
    Otherwise, you can't pick up any more. The passengers will turn blue to indicate them boarding the elevator.
 7. The player wins by transporting all the passengers before the time limit. Otherwise, the player loses. 
-8. Once the end screen appears, the player can refresh the page to return to the menu screen. From there, the player can either retry or continue 
-   and play another level. 
-9. For clearer instructions, refer to the Elevator Game Manual.
+8. Once the end screen appears, the player can refresh the page to return to the menu screen. 
+   From there, the player can either retry or continue and play another level. 
+9. For more indepth instructions, refer to the Elevator Game Manual.
 
 
