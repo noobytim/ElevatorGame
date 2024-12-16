@@ -10,8 +10,6 @@ document.addEventListener("keydown", function(event) {
         document.getElementById("title-screen").style.display = "none";
         document.getElementById("menu").style.display = "block";
 
-        console.log("I am at addEventListener now");
-
         // can't go back to title screen now
         gameStarted = true;
 
@@ -28,8 +26,6 @@ function startGame(levelNum) {
     // menu screen disappears and game-area with shader are visible
     document.getElementById("menu").style.display = "none";
     document.getElementById("game-area").style.display = "block";
-
-    console.log("I am at startgame function right now");
 
     gameAreaLoaded = true;
 
@@ -60,14 +56,6 @@ function loadLevel(levelNum) {
         .catch((error) => {
             console.error(error);
         });
-}
-
-function retryButton() {
-
-    // document.getElementById("menu").style.display = "none";
-    // document.getElementById("game-area").style.display = "none";
-    // document.getElementById("retry").style.display = "block";
-
 }
 
 function retry(answer) {
