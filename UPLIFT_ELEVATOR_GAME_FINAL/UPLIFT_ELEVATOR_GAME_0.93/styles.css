@@ -1,0 +1,81 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+#elevatorCanvas {
+  /* border: 1px solid #a68eda; */
+  height: 800px;
+  width: 600px;
+}
+
+#title-screen {
+  font-family: 'Arial Black', sans-serif;
+}
+
+#menu {
+  font-family: 'Arial Black', sans-serif;
+}
+
+/* makes I in UPLIFT blue :D */
+.highlight {
+  color: #514fe4;
+  font-weight: bold;
+  transform: scaleX(2.5);
+  display: inline-block; 
+}
+
+
+#counters {
+  width: 600px;
+  position: relative;
+  margin: 0 auto;
+  height: 40px;
+}
+
+
+#floorNum {
+  font-size: 20px;
+  /* font-weight: italic; */
+  font-family: 'Arial Black', serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  left: 30%; /* Align to left-center */
+  transform: translateX(-25%); /* Center it horizontally around the 25% position */
+  z-index: 1;
+}
+
+#floorNum, #faceDirection, #weightLimit, #timerDisplay {
+  font-size: 15px;
+  /* font-weight: bold; */
+  font-family: 'Arial Black', Arial, sans-serif;
+  color: #501572;
+
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+#faceNum {
+  left: 30%;
+  transform: translateX(-25%);
+}
+
+#faceDirection {
+  left: 0;
+}
+
+#weightLimit {
+  right: 25%;
+  transform: translateX(5%);
+}
+
+#timerDisplay {
+  right: 0;
+}
