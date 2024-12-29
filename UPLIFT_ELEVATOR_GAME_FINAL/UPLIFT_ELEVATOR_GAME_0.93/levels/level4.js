@@ -1,6 +1,5 @@
 // level4.js
 window.levelConfigurations = {
-    buildingHeight: 600,
     floorTot: 6,
     MAX_WEIGHT: 300,
     timer: 25,
