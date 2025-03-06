@@ -1,4 +1,5 @@
 ###### README
+
 Timothy Jeon, Ren-Zhi Zheng, and Dante Ottaviani.
 
 Our project evolved significantly throughout the course of this semester. Originally, we went through different iterations on how we wanted our game to look visually and how the players would interact with the game. An example would be how we initally tried to make our game in 3D using ggslac but then pivoted to 2D using Javascript, CSS, and HTML as it was a better direction to take our game. Another example would be our elevator building initially being designed to be viewed on the side but then changed it to a top-down view to implement rotations and better readability on passenger location. In the end, we implemented a design we think best suits the needs for both Computer Graphics and Intro to Game Studies as well as our personal goal to create a simple, yet complex game based on the concept of elevators. 
@@ -11,13 +12,14 @@ In our game, we accomplished many of our goals through our implementations. One 
 
 # How to run the game
 
+<img width="712" alt="image" src="https://github.com/user-attachments/assets/fed27b46-ec31-4616-82a0-c54a9c396824" />
+
 1. Please download Visual Studio Code. 
 2. Then open this folder in Visual Studio Code. 
 3. On lefthand side bar, click on EXTENSIONS, and install Live Server. 
 4. After installation, navigate back to explorer on sidebar, and right-click the game.html file and click "Open with Live Server" to open up the game in a browser.
 
 # Directions + Controls
-
 1. Use the up or down arrow keys to move the elevator up or down.
 2. Use the left and right arrow keys to change the elevator direction. 
 3. Each passenger has a specific origin and destination depending on the direction and floor, as well as a weight. 
